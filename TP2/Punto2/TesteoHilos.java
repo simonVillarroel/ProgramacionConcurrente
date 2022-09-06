@@ -5,7 +5,7 @@ public class TesteoHilos {
         Thread miHilo = new MiEjecucion();
         miHilo.start();
         try {
-            Thread.currentThread().join(2000);
+            miHilo.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
