@@ -1,20 +1,20 @@
 package TP3.Punto4;
 
 public class Jaula {
-    private Rueda rueda = new Rueda();
-    private Hamaca hamaca = new Hamaca();
-    private Plato plato = new Plato();
+    private Actividad rueda = new Actividad("Rueda");
+    private Actividad hamaca = new Actividad("Hamaca");
+    private Actividad plato = new Actividad("Plato");
 
     public Jaula(){
 
     }
-    public Rueda getRueda(){
-        return this.rueda;
+    public Actividad getHamaca() {
+        return hamaca;
     }
-    public Plato getPlato(){
-        return this.plato;
+    public Actividad getPlato() {
+        return plato;
     }
-    public Hamaca getHamaca(){
-        return this.hamaca;
+    public Actividad getRueda() {
+        return rueda;
     }
 }
