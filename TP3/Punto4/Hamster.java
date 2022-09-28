@@ -10,27 +10,23 @@ public class Hamster implements Runnable{
     public void run(){
 
         System.out.println();
-        
+        comer();
         ejercitar(jaula.getRueda().getTiempoDeEjercicio());
         descansar(jaula.getHamaca().getTiempoDeDescanso());
 
     }
 
-    public void comer(int tiempo){
+    public void comer(){
         System.out.println(Thread.currentThread().getName() + " comiendo.");
         jaula.getPlato().comer();
         System.out.println(Thread.currentThread().getName() + " termino de comer.");
     }
 
     public void ejercitar(int tiempo){
-        try {
             System.out.println(Thread.currentThread().getName() + " ejercitando.");
-            Thread.sleep(tiempo);
+            jaula.getRueda().ejercitar();
             System.out.println(Thread.currentThread().getName() + " termino de ejercitar.");
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
     
     public void descansar(int tiempo){
