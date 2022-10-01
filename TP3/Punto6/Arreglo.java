@@ -1,4 +1,4 @@
-package TP3.Punto3;
+package TP3.Punto6;
 
 import java.util.Random;
 
