@@ -11,21 +11,22 @@ public class Usuario implements Runnable{
 
     public void run(){
         generarTrabajo();
-        imprimirTrabajo();
+       
     }
 
     public void generarTrabajo(){
-        System.out.println(Thread.currentThread().getName()+"Generando trabajo tipo"+ this.tipo);
+        System.out.println(Thread.currentThread().getName()+" Generando trabajo tipo"+ this.tipo);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().getName()+"Trabajo generado, yendo a imprimir...");
+        System.out.println(Thread.currentThread().getName()+" Trabajo generado, yendo a imprimir...");
         imprimirTrabajo(this.tipo);
     }
 
     public void imprimirTrabajo(char tipo){
+        boolean exito = false;
         switch (this.tipo) {
             case 'A':
                 this.centro.usarImpresoraA();
@@ -34,7 +35,17 @@ public class Usuario implements Runnable{
                 this.centro.usarImpresoraB();
                 break;
             case 'X':
-                this.centro.
+                while(!exito){
+                    if(this.centro.usarImpresoraA()){
+                        exito = true;
+                    }else{
+                        if (this.centro.usarImpresoraB())) {
+                        System.out.println(Thread.currentThread().getName()+" Imprimiendo con impresora tipo B");
+                        exito = true;
+                        }
+                    }
+                }
+                break;
             default:
                 break;
         }

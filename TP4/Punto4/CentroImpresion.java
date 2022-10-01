@@ -11,25 +11,37 @@ public class CentroImpresion {
         this.impresoraTipoB = new Semaphore(1);
     }
 
-    public void usarImpresoraA(){
+    public boolean usarImpresoraA(){
+        boolean exito = false;
         try {
             impresoraTipoA.acquire();
+            exito = true;
+            System.out.println("+++"+Thread.currentThread().getName()+" usando impresora A");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("---"+Thread.currentThread().getName()+" libero impresora A");
+        impresoraTipoA.release();
+        return exito;
     }
-    public void usarImpresoraB(){
+    public boolean usarImpresoraB(){
+        boolean exito = false;
         try {
             impresoraTipoB.acquire();
+            exito = true;
+            System.out.println(Thread.currentThread().getName()+" usando impresora B");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("---"+Thread.currentThread().getName()+" libero impresora B");
+        impresoraTipoB.release();
+        return exito;
     }
 
-    public void liberarImpresoraA(){
-        impresoraTipoA.release();
+    public Semaphore getImpresoraTipoA() {
+        return impresoraTipoA;
     }
-    public void liberarImpresoraB(){
-        impresoraTipoB.release();
+    public Semaphore getImpresoraTipoB() {
+        return impresoraTipoB;
     }
 }

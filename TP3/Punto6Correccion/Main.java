@@ -3,7 +3,7 @@ package TP3.Punto6Correccion;
 public class Main {
     public static void main(String[] args) {
         int sumaSecuencial=0, indice = 0;
-        int cantidadHilos = 7;  //Modificar para probar con diferente cantidad de hilos
+        int cantidadHilos = 20;  //Modificar para probar con diferente cantidad de hilos
         Suma suma = new Suma();
 		Arreglo arreglo=new Arreglo(50000);
 		arreglo.llenarArreglo();
