@@ -39,7 +39,7 @@ public class Usuario implements Runnable{
                     if(this.centro.usarImpresoraA()){
                         exito = true;
                     }else{
-                        if (this.centro.usarImpresoraB())) {
+                        if (this.centro.usarImpresoraB()) {
                         System.out.println(Thread.currentThread().getName()+" Imprimiendo con impresora tipo B");
                         exito = true;
                         }
