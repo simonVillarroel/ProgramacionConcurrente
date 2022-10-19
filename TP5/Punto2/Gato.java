@@ -17,7 +17,7 @@ public class Gato implements Runnable{
                 if(comedor.getTurno() == especie || comedor.entrar(especie)){
                     if(comedor.comer()){
                         System.out.println("-G- "+Thread.currentThread().getName()+" comiendo.");
-                        Thread.sleep(5000);
+                        Thread.sleep(1);
                         System.out.println("-G- "+Thread.currentThread().getName()+" termino de comer.");
                         comedor.dejarComer();
                         comio = true;

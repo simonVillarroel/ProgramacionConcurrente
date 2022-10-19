@@ -15,7 +15,7 @@ public class Comedor {
         this.turno = "";
     }
 
-    public boolean entrar(String especie) throws InterruptedException{
+    public boolean entrar(String especie){
         boolean exito = false;
         if(semEntrada.tryAcquire(1)){
             exito = true;

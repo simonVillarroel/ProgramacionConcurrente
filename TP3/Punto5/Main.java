@@ -2,7 +2,7 @@ package TP3.Punto5;
 
 public class Main {
     public static void main(String[] args) {
-        Thread[] arregloAutos = new Thread[1];
+        Thread[] arregloAutos = new Thread[5];
         Surtidor surtidor = new Surtidor(500);
         
         //Creacion arreglo de autos
