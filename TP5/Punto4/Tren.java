@@ -8,7 +8,7 @@ public class Tren {
     private int cantAsientos, asientosOcupados;
     private Semaphore semAsientos, semTickets;
     private Semaphore semInicioVenta, semFinVenta;
-    private Semaphore semInicioViaje, semFinViaje;
+    private Semaphore semInicioViaje, semFinViaje, semaforo;
 
     public Tren(int cant){
         this.asientosOcupados = 0;
@@ -22,6 +22,7 @@ public class Tren {
         this.semFinVenta = new Semaphore(0);
         this.semInicioViaje = new Semaphore(0);
         this.semFinViaje = new Semaphore(0);
+        this.semaforo = new Semaphore(1);
     }
 
     public boolean asientosLlenos(){
@@ -47,13 +48,16 @@ public class Tren {
         }
     }
     public void bajar() throws InterruptedException{
+        semaforo.acquire();
         semFinViaje.acquire();
         semAsientos.release();
         asientos[asientosOcupados-1] = false;
         asientosOcupados--;
+        //System.out.println(asientosOcupados+",  "+asientosVacios());       
         if(asientosVacios()){
             semInicioVenta.release();
         }
+        semaforo.release();
     }
 
     //Metodos utilizados por ControlTren

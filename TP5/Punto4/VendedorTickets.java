@@ -9,6 +9,7 @@ public class VendedorTickets implements Runnable{
 
     public void run(){
         while(true){
+            //System.out.println(tren.asientosVacios());
             if(tren.asientosVacios()){
                 System.out.println(Thread.currentThread().getName()+" abrió la venta de tickets.");
                 try {
@@ -19,7 +20,13 @@ public class VendedorTickets implements Runnable{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
     }
+}
 }

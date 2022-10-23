@@ -18,6 +18,7 @@ public class Pasajero implements Runnable{
 
         //Subida y bajada del tren
         try {
+            Thread.sleep(1000);
             tren.subir();
             System.out.println(Thread.currentThread().getName()+" subió al tren");
             tren.bajar();
