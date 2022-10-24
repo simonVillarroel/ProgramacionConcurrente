@@ -5,7 +5,7 @@ import java.util.concurrent.Semaphore;
 public class Espacio {
     private int cantHidrogeno, cantOxigeno;
     private Semaphore Olisto, Hlisto, oxigenoUsado, hidrogenoUsado;
-    private Semaphore oxigenoDisponible, hidrogenoDisponible, hacerAtomo;
+    private Semaphore OlistoDisponible, HlistoDisponible, hacerAtomo;
 
     public Espacio(){
         this.cantHidrogeno = 0;
@@ -14,16 +14,16 @@ public class Espacio {
         this.Hlisto = new Semaphore(0);
         this.oxigenoUsado = new Semaphore(0);
         this.hidrogenoUsado = new Semaphore(0);
-        this.oxigenoDisponible = new Semaphore(1);
-        this.hidrogenoDisponible = new Semaphore(2);
+        this.OlistoDisponible = new Semaphore(1);
+        this.HlistoDisponible = new Semaphore(2);
         this.hacerAtomo = new Semaphore(0); 
     }
 
-    //Metodos Generador
+    //Métodos de GeneradorDeAtomos
     public void hacerAtomos() throws InterruptedException{
-        if (this.cantHidrogeno >= 2 && this.cantOxigeno >= 1) {
+        if (this.cantHidrogeno > 2 && this.cantOxigeno > 1) {
             System.out.println("//////////////Generador bloqueado");
-            this.hacerAtomo.acquire();
+            this.hacerAtomo.acquire(); //Bloquea la producción de átomos
         }
     }
     
@@ -40,37 +40,41 @@ public class Espacio {
         this.cantOxigeno++;
     }
 
-    //Metodos de Atomo
+    //Métodos de Atomo
     public void liberarOxigeno() throws InterruptedException{
-        this.oxigenoDisponible.acquire();
+        this.OlistoDisponible.acquire();
+        //Un átomo de Oxígeno entra a Olisto
         this.Olisto.release();
     }
 
     public void liberarHidrogeno() throws InterruptedException{
-        this.hidrogenoDisponible.acquire();
+        this.HlistoDisponible.acquire();
+        //Un átomo de Hidrógeno entra a Hlisto
         this.Hlisto.release();
     }
 
     public void usarAtomo(String tipo) throws InterruptedException{
         if(tipo == "Hidrogeno"){
             this.hidrogenoUsado.acquire();
+            //Un átomo de Oxígeno es consumido
             this.cantHidrogeno--;
-            this.hidrogenoDisponible.release();
+            this.HlistoDisponible.release();
         }else{
             this.oxigenoUsado.acquire();
+            //Un átomo de Hidrógeno es consumido
             this.cantOxigeno--;
-            this.oxigenoDisponible.release();
+            this.OlistoDisponible.release();
         }
     }
 
-    //Metodos de ConsumidorAgua
+    //Métodos de ConsumidorAgua
     public void hacerAgua() throws InterruptedException{
+        //Espera por Hlisto y Olisto y produce agua
         this.Hlisto.acquire(2);
         this.Olisto.acquire();
         this.hidrogenoUsado.release(2);
         this.oxigenoUsado.release();
 
-        ///
-        this.hacerAtomo.release();
+        this.hacerAtomo.release(); //Libera la producción de átomos
     }
 }

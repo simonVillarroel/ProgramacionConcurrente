@@ -13,14 +13,14 @@ public class GeneradorDeAtomos implements Runnable{
         int r, cont = 1;
         while(true){
             Random random = new Random();
-            r = random.nextInt(2);
+            r = random.nextInt(3);
             Atomo atomo;
             try {
-                this.espacio.hacerAtomos();
+                this.espacio.hacerAtomos(); //Primero pregunta si puede generar átomos
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
-            if(r == 0){
+            if(r == 0){ //Genera Oxígeno o Hidrógeno, dependiendo de la variable aleatoria 'r' 
                 if(this.espacio.getCantHidrogeno() < 10){
                     System.out.println(Thread.currentThread().getName()+ ": Generando atomo de Hidrogeno.");
                     atomo = new Atomo(espacio, "Hidrogeno");

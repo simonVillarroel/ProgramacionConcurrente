@@ -20,6 +20,7 @@ public class Recipiente {
     public void agregarAgua() throws InterruptedException{
         this.llenar.acquire();
         this.capacidad++;
+        System.out.println("    ***Capacidad actual Recipiente: "+this.capacidad+"/"+this.capacidadTotal);
         if(this.lleno()){
             this.distribuir.release();
         }else{
@@ -30,7 +31,7 @@ public class Recipiente {
 
     public void distribuirAgua() throws InterruptedException {
         this.distribuir.acquire();
-        this.capacidad = 0;
+        this.capacidad = 0; //Se vacía el recipiente
         System.out.println("Recipiente vacio.");
         System.out.println();
         this.llenar.release();
