@@ -50,7 +50,7 @@ public class Transbordador{
     }
 
     public void comenzarViaje() throws InterruptedException{
-        this.viaje.acquire();
+        this.viaje.acquire(); //Espera a que hayan subido 10 autos
         System.out.println("El viaje comenzo.");
     }
 

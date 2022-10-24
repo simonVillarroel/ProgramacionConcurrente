@@ -10,7 +10,6 @@ public class ControlTransbordador implements Runnable{
     public void run(){
         while(true){
             try {
-                System.out.println("/////////////////////////////////");
                 this.transbordador.liberarEntrada();
                 this.transbordador.comenzarViaje();
                 System.out.println(Thread.currentThread().getName()+": Viajando.");
@@ -22,6 +21,7 @@ public class ControlTransbordador implements Runnable{
                 Thread.sleep(5000);
                 this.transbordador.llegoEste();
                 System.out.println("/////////////////////////////////");
+                System.out.println();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

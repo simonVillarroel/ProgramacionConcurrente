@@ -43,6 +43,7 @@ public class Reloj {
         }else{
             this.hora++;
         }
+        //Setea la cantidad de hilos Durmientes que están actualmente durmiendo
         cantidadDurmientes = totalDurmientes-1;
         this.notify();
         System.out.println();
