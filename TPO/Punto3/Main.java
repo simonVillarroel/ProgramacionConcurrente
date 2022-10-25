@@ -12,8 +12,10 @@ public class Main {
 
         //Creacion de los hilos Durmiente
         Random random = new Random();
+        int horaAlarma, horasDeTrabajo = 5;
         for(int i=0; i < cantidadDeDurmientes; i++){
-            Durmiente durmiente = new Durmiente(reloj, random.nextInt(24),5);
+            horaAlarma = random.nextInt(24);
+            Durmiente durmiente = new Durmiente(reloj, horaAlarma, horasDeTrabajo);
             Thread hiloDurmiente = new Thread(durmiente, "Durmiente"+(i+1));
             durmientes[i] = hiloDurmiente;
             hiloDurmiente.start();

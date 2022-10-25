@@ -56,12 +56,12 @@ public class Espacio {
     public void usarAtomo(String tipo) throws InterruptedException{
         if(tipo == "Hidrogeno"){
             this.hidrogenoUsado.acquire();
-            //Un átomo de Oxígeno es consumido
+            //Un átomo de Hidrógeno es consumido
             this.cantHidrogeno--;
             this.HlistoDisponible.release();
         }else{
             this.oxigenoUsado.acquire();
-            //Un átomo de Hidrógeno es consumido
+            //Un átomo de Oxígeno es consumido
             this.cantOxigeno--;
             this.OlistoDisponible.release();
         }

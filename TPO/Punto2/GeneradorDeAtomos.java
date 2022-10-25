@@ -13,7 +13,7 @@ public class GeneradorDeAtomos implements Runnable{
         int r, cont = 1;
         while(true){
             Random random = new Random();
-            r = random.nextInt(3);
+            r = random.nextInt(2);
             Atomo atomo;
             try {
                 this.espacio.hacerAtomos(); //Primero pregunta si puede generar átomos

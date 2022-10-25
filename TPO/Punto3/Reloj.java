@@ -6,7 +6,7 @@ public class Reloj {
     public Reloj(int total){
         this.hora = 0;
         this.horaTotal = 24;
-        this.cantidadDurmientes = total;
+        this.cantidadDurmientes = total; 
         this.totalDurmientes = total;
     }
 
