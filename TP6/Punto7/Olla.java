@@ -16,7 +16,7 @@ public class Olla {
         this.raciones = n;
         this.capacidadOlla = n;
         this.cocinando = false;
-        this.cerrojo = new ReentrantLock(true);
+        this.cerrojo = new ReentrantLock();
         this.hayComida = cerrojo.newCondition();
         this.noHayComida = cerrojo.newCondition();
         this.terminoDeCocinar = cerrojo.newCondition();
@@ -30,19 +30,20 @@ public class Olla {
     public void comer(){
         this.cerrojo.lock();
         try {
-            if(cocinando){
-                this.terminoDeCocinar.await();
-            }else{
-                while(vacio()){
+            while(vacio()){
+                if(cocinando){
+                    this.terminoDeCocinar.await();
+                } else{
                     System.out.println("*** "+Thread.currentThread().getName()+": Despierta al cocinero");
-                    this.noHayComida.signal();
                     this.cocinando = true;
+                    this.noHayComida.signal();
                     this.hayComida.await();
+                    this.terminoDeCocinar.signalAll(); 
+                    //Se sirve primero y luego avisa a los demas canibales que hay comida disponible
                 }
             }
             this.raciones--;
-            System.out.println(Thread.currentThread().getName()+": Se sirvio una racion");
-
+            System.out.println(Thread.currentThread().getName()+": Se sirvio una racion, raciones ="+raciones);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -63,7 +64,7 @@ public class Olla {
     }
     public void terminarDeCocinar(){
         this.raciones = this.capacidadOlla;
-        this.terminoDeCocinar.signal();
+        this.hayComida.signal();
         this.cocinando = false;
         this.cerrojo.unlock();
     }

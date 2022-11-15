@@ -3,7 +3,7 @@ package TP6.Punto7;
 public class Main {
     public static void main(String[] args) {
         Thread[] canibales = new Thread[100];
-        Olla olla = new Olla(20);
+        Olla olla = new Olla(15);
         Cocinero cocinero = new Cocinero(olla);
         Thread hiloCocinero = new Thread(cocinero);
 

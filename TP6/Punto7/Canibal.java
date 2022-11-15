@@ -10,12 +10,6 @@ public class Canibal implements Runnable{
     public void run(){
         System.out.println(Thread.currentThread().getName()+": Esperando para servirse comida");
         this.olla.comer();
-        //System.out.println(Thread.currentThread().getName()+": Se sirvio una racion");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Thread.currentThread().getName()+": Termino de comer");
+        //Falta resolver problemas de responsabilidad al mostrar mensajes
     }
 }
