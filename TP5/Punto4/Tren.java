@@ -1,83 +1,66 @@
 package TP5.Punto4;
 
-import java.util.Arrays;
 import java.util.concurrent.Semaphore;
 
 public class Tren {
-    private boolean[] asientos;
+    
     private int cantAsientos, asientosOcupados;
-    private Semaphore semAsientos, semTickets;
-    private Semaphore semInicioVenta, semFinVenta;
-    private Semaphore semInicioViaje, semFinViaje, semaforo;
+    private Semaphore ticketsVendidos, tickets;
+    private Semaphore inicioVenta;
+    private Semaphore inicioViaje, bajar, mutex;
 
     public Tren(int cant){
         this.asientosOcupados = 0;
         this.cantAsientos = cant;
-        this.asientos = new boolean[cantAsientos];
-        Arrays.fill(asientos, false);
-        this.semAsientos = new Semaphore(cantAsientos);
-
-        this.semTickets = new Semaphore(0);
-        this.semInicioVenta = new Semaphore(2);
-        this.semFinVenta = new Semaphore(0);
-        this.semInicioViaje = new Semaphore(0);
-        this.semFinViaje = new Semaphore(0);
-        this.semaforo = new Semaphore(1);
+        this.inicioVenta = new Semaphore(2);
+        this.tickets = new Semaphore(0);
+        this.ticketsVendidos = new Semaphore(0);
+        this.inicioViaje = new Semaphore(0);
+        this.bajar = new Semaphore(0);
+        this.mutex = new Semaphore(1);
     }
 
-    public boolean asientosLlenos(){
-        return (asientosOcupados == cantAsientos);
-    }
     public boolean asientosVacios(){
         return (asientosOcupados == 0);
     }
 
     //Metodos utilizados por Pasajero
     public void comprarTicket() throws InterruptedException{
-        semTickets.acquire();
-        if(semTickets.availablePermits() == 0){
-            semFinVenta.release();
-        }
+        tickets.acquire();
+        ticketsVendidos.release();
+        this.mutex.acquire();
+        this.asientosOcupados++;
+        this.mutex.release();
     }
-    public void subir() throws InterruptedException{
-        semAsientos.acquire();
-        asientosOcupados++;
-        asientos[asientosOcupados-1] = true;
-        if(asientosLlenos()){
-            semInicioViaje.release();
-        }
-    }
+
     public void bajar() throws InterruptedException{
-        semaforo.acquire();
-        semFinViaje.acquire();
-        semAsientos.release();
-        asientos[asientosOcupados-1] = false;
-        asientosOcupados--;
-        //System.out.println(asientosOcupados+",  "+asientosVacios());       
+        bajar.acquire();
+        mutex.acquire();
+        asientosOcupados--;       
         if(asientosVacios()){
-            semInicioVenta.release();
+            inicioVenta.release();
         }
-        semaforo.release();
+        mutex.release();
     }
 
     //Metodos utilizados por ControlTren
     public void comenzarViaje() throws InterruptedException{
-        semInicioViaje.acquire(2);
+        inicioViaje.acquire();
     }
     public void finalizarViaje(){
-        semFinViaje.release(cantAsientos);
-        semInicioVenta.release();
+        this.bajar.release(cantAsientos);
+        inicioVenta.release();
     }
 
     //Metodos utilizados por VendedorTickets
     public void abrirVenta() throws InterruptedException{
-        semInicioVenta.acquire(2);
-        semTickets.release(cantAsientos);
+        inicioVenta.acquire(2);
+        tickets.release(cantAsientos);
     }
     public void cerrarVenta() throws InterruptedException{
-        semFinVenta.acquire();
+        ticketsVendidos.acquire(cantAsientos);
     }
     public void notificarAControl(){
-        semInicioViaje.release();
+        inicioViaje.release();
     }
 }

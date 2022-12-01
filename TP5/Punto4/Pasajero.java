@@ -8,19 +8,9 @@ public class Pasajero implements Runnable{
     }
 
     public void run(){
-        //Compra del ticket
         try {
             tren.comprarTicket();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Thread.currentThread().getName()+" compró un ticket");
-
-        //Subida y bajada del tren
-        try {
-            Thread.sleep(1000);
-            tren.subir();
-            System.out.println(Thread.currentThread().getName()+" subió al tren");
+            System.out.println(Thread.currentThread().getName()+" compró un ticket y subió al tren");
             tren.bajar();
             System.out.println(Thread.currentThread().getName()+" bajó del tren");
         } catch (InterruptedException e) {

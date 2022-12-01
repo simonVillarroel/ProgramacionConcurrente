@@ -2,9 +2,9 @@ package TP5.Punto4;
 
 public class Main {
     public static void main(String[] args) {
-        int cantidadPasajeros = 40;
+        int cantidadPasajeros = 15;
 
-        Tren tren = new Tren(20);
+        Tren tren = new Tren(5);
         Thread[] pasajeros = new Thread[cantidadPasajeros];
 
         VendedorTickets vendedor = new VendedorTickets(tren);
